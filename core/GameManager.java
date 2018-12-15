@@ -17,4 +17,5 @@ public class GameManager {
 	public int getIndice(int l, int c) {return _game.getIndice(l, c);}
 	public boolean endGame() { return _game.endGame();}
 	public boolean hasZeroes() {return _game.hasZeroes();}
+	public boolean validMove() {return _game.validMove();}
 }

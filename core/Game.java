@@ -6,6 +6,7 @@ public class Game {
 	private Matrix _matrix;
 	private int _currentScore = 0;
 	private boolean _move = false;
+	private boolean _validMove = true;
 	
 	public Game(int matrixSize) {_matrix = new Matrix(matrixSize);}
 	
@@ -16,6 +17,7 @@ public class Game {
 	public String printLine(int line) {return _matrix.printLine(line);}
 	public int getIndice(int l, int c) {return _matrix.getIndice(l, c);}
 	public boolean hasZeroes() {return _matrix.hasZeroes();}
+	public boolean validMove() {return _validMove;}
 
 	public boolean endGame() {
 		if ((_matrix.getNZeroes() == 0) && (_move == false) && (possibleMove() == false)) return true;
@@ -37,6 +39,7 @@ public class Game {
 	
 	public void moveRight() {
 		int size = _matrix.getSize(), moves = 0, finish, totalMoves = 0;
+		_validMove = false;
 		for (int l = 0; l < size; l++) {
 			finish = 0;
 			while (finish == 0) {
@@ -46,6 +49,7 @@ public class Game {
 						_matrix.setIndice(l, c, 0);	
 						moves++;
 						totalMoves++;
+						_validMove = true;
 					}
 				
 					else if ((_matrix.getIndice(l, c) == _matrix.getIndice(l, c + 1)) && (_matrix.getIndice(l, c) != 0)) {
@@ -54,6 +58,7 @@ public class Game {
 						moves++;	
 						totalMoves++;
 						addScore(_matrix.getIndice(l, c + 1));
+						_validMove = true;
 					}
 				}
 				
@@ -67,6 +72,7 @@ public class Game {
 	}
 	public void moveLeft() {
 		int size = _matrix.getSize(), moves = 0, finish, totalMoves = 0;
+		_validMove = false;
 		for (int l = 0; l < size; l++) {
 			finish = 0;
 			while (finish == 0) {
@@ -76,6 +82,7 @@ public class Game {
 						_matrix.setIndice(l, c, 0);	
 						moves++;
 						totalMoves++;
+						_validMove = true;
 					}
 					
 					else if ((_matrix.getIndice(l, c) == _matrix.getIndice(l, c - 1)) && (_matrix.getIndice(l, c) != 0)) {
@@ -84,6 +91,7 @@ public class Game {
 						moves++;
 						totalMoves++;
 						addScore(_matrix.getIndice(l, c - 1));
+						_validMove = true;
 					}
 				}
 				
@@ -98,6 +106,7 @@ public class Game {
 	
 	public void moveUp() {
 		int size = _matrix.getSize(), moves = 0, finish, totalMoves = 0;
+		_validMove = false;
 		for (int c = 0; c < size; c++) {
 			finish = 0;
 			while (finish == 0) {
@@ -107,6 +116,7 @@ public class Game {
 						_matrix.setIndice(l, c, 0);	
 						moves++;
 						totalMoves++;
+						_validMove = true;
 					}
 					
 					else if ((_matrix.getIndice(l, c) == _matrix.getIndice(l - 1, c)) && (_matrix.getIndice(l, c) != 0)) {
@@ -115,6 +125,7 @@ public class Game {
 						moves++;
 						totalMoves++;
 						addScore(_matrix.getIndice(l - 1, c));
+						_validMove = true;
 					}
 				}
 				
@@ -129,6 +140,7 @@ public class Game {
 	
 	public void moveDown() {
 		int size = _matrix.getSize(), moves = 0, finish, totalMoves = 0;
+		_validMove = false;
 		for (int c = 0; c < size; c++) {
 			finish = 0;
 			while (finish == 0) {
@@ -138,6 +150,7 @@ public class Game {
 						_matrix.setIndice(l, c, 0);	
 						moves++;
 						totalMoves++;
+						_validMove = true;
 					}
 					
 					else if ((_matrix.getIndice(l, c) == _matrix.getIndice(l + 1, c)) && (_matrix.getIndice(l, c) != 0)) {
@@ -146,6 +159,7 @@ public class Game {
 						moves++;
 						totalMoves++;
 						addScore(_matrix.getIndice(l + 1, c));
+						_validMove = true;
 					}
 				}
 				
