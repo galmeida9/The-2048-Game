@@ -1,7 +1,7 @@
 # The-2048-Game
 2048 game made in java 8, to run open jar file or compile the following way: javac App.java -cp .:core/:app/
 
-#Changelog
+# Changelog
 
 Version 1.2
     -fixed end of game algorithm, now the game doesnt end when there are no more free slots, but when its impossible to make a move,
