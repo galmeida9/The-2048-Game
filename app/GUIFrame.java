@@ -36,7 +36,7 @@ public class GUIFrame {
         frame.setSize(500, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        BufferedImage backgroundIMG = ImageIO.read(new File("D:\\Documents\\GitHub\\The-2048-Game\\app\\images\\beige_background.jpg"));
+        BufferedImage backgroundIMG = ImageIO.read(new File("app\\images\\beige_background.jpg"));
         JLabel background = new JLabel(new ImageIcon(backgroundIMG));
         background.setBounds(0, 0, 500, 800);
 
