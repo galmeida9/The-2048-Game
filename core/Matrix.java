@@ -23,8 +23,11 @@ public class Matrix {
 	}
 
 	public int getSize() {return _size;}
-
 	public int getNZeroes() {return _nZeroes;}
+	public boolean hasZeroes() {
+		if (_nZeroes > 0) return true;
+		return false;
+	}
 
 	public String printLine(int line) {
 		String res = "| ";

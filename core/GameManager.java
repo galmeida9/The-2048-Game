@@ -15,9 +15,6 @@ public class GameManager {
 	public int getMatrixSize() {return _game.getMatrixSize();}
 	public String printLine(int line) {return _game.printLine(line);}
 	public int getIndice(int l, int c) {return _game.getIndice(l, c);}
-	
-	public boolean endGame() {
-		if (_game.endGame()) return true;
-		return false;
-	}
+	public boolean endGame() { return _game.endGame();}
+	public boolean hasZeroes() {return _game.hasZeroes();}
 }

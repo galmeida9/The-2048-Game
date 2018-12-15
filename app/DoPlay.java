@@ -15,7 +15,7 @@ public class DoPlay extends Command {
 
 	@Override
 	public void execute() {
-        if (!_receiver.endGame()) _receiver.addNumber();
+        if (!_receiver.endGame() && _receiver.hasZeroes()) _receiver.addNumber();
         frame.print();
         if (_receiver.endGame()) frame.endGame();
 	}
