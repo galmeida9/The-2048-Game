@@ -1,12 +1,15 @@
 package app;
 
+import java.io.IOException;
 import core.GameManager;
 
 public class DoPlay extends Command {
     private GUIFrame frame;
 	public DoPlay(GameManager receiver) {
         super(Label.PLAY, receiver);
-        frame = new GUIFrame(_receiver, this);
+        try {
+            frame = new GUIFrame(_receiver, this);
+        } catch (IOException e) {e.printStackTrace();}
     }
     
 
