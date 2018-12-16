@@ -3,6 +3,11 @@
 
 # Changelog
 
+Version 1.3
+    -Added prompt before exit
+    -jar file now works standalone
+    -couldnt put background image in a separate folder, for some reason the jar file could load the program, so it is in the app/ folder
+
 Version 1.2
     -fixed end of game algorithm, now the game doesnt end when there are no more free slots, but when its impossible to make a move,
     -fixed issue where it added a number to the game when a not valid move was made, sush as moving the board and nothing happend;

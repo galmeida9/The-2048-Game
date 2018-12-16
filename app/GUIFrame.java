@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import core.GameManager;
 import java.util.List;
@@ -20,6 +21,8 @@ import java.util.Scanner;
 import java.io.File;
 import javax.imageio.ImageIO;
 import java.io.IOException;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class GUIFrame {
     private GameManager _receiver;
@@ -34,9 +37,21 @@ public class GUIFrame {
         JFrame frame = new JFrame();
         frame.setTitle("The 2048 Game");
         frame.setSize(500, 800);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        
+        class ExitMessage extends WindowAdapter {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                String options[] = {"Yes", "No"};
+                int result = JOptionPane.showOptionDialog(null, "Are you sure you want to exit?", "Closing", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+                if (result == 0) System.exit(0);
+            }
+        }
 
-        BufferedImage backgroundIMG = ImageIO.read(new File("app\\images\\beige_background.jpg"));
+        frame.addWindowListener(new ExitMessage());
+  
+        /*BufferedImage backgroundIMG = ImageIO.read(new File("app\\resources\\beige_background.jpg"));*/
+        BufferedImage backgroundIMG = ImageIO.read(getClass().getResource("beige_background.jpg"));
         JLabel background = new JLabel(new ImageIcon(backgroundIMG));
         background.setBounds(0, 0, 500, 800);
 
