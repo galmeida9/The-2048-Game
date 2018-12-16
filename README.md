@@ -4,6 +4,10 @@
 
 # Changelog
 
+<strong>Version 1.4</strong><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;-added reset button, to start a new game anytime you want,
+    &nbsp;&nbsp;&nbsp;&nbsp;-now 5 seconds after you lose appears your score, so you now with which score you lost;
+
 <strong>Version 1.3</strong><br>
     &nbsp;&nbsp;&nbsp;&nbsp;-Added prompt before exit,<br>
     &nbsp;&nbsp;&nbsp;&nbsp;-jar file now works standalone,<br>

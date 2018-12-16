@@ -23,6 +23,8 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GUIFrame {
     private GameManager _receiver;
@@ -58,6 +60,20 @@ public class GUIFrame {
         _score = new JLabel("Score: 0");
         _score.setBounds(20, 0, 500, 100);
         _score.setFont(_score.getFont().deriveFont(30f)); 
+
+        JButton reset = new JButton("Reset");
+        reset.setBounds(350, 35, 100, 30);
+        reset.setBackground(Color.RED);
+        class Reset implements ActionListener {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GameManager newGM = new GameManager(4);
+                _receiver = newGM;
+                _command.setReceiver(newGM);
+                _command.execute();
+            }
+        }
+        reset.addActionListener(new Reset());
 
         JButton _w = new JButton("Up");
         _w.setBounds(200, 500, 90, 90);
@@ -121,7 +137,7 @@ public class GUIFrame {
         int size = _receiver.getMatrixSize();
         int pos = 100;
 
-        int x = 80, y = 100;
+        int x = 75, y = 100;
         for (int l = 0; l < size; l++) {
             for (int c = 0; c < size; c++) {
                 _matrixDisplay.add(new JButton(""));
@@ -132,13 +148,14 @@ public class GUIFrame {
                 x += 90;
             }
             y += 90;
-            x = 80;
+            x = 75;
         }
         
         panel.add(_w);
         panel.add(_s);
         panel.add(_a);
         panel.add(_d);
+        panel.add(reset);
         panel.add(background);
         background.add(_score);
         frame.add(panel);
@@ -162,5 +179,12 @@ public class GUIFrame {
     public void endGame() {
         _score.setText("YOU LOST");
         _score.setFont(_score.getFont().deriveFont(30f));
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask(){
+            @Override
+            public void run() {
+                _score.setText("Score: " + _receiver.getScore());
+            }
+        }, 5 * 1000);
     }
 }
