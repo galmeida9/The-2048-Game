@@ -4,6 +4,9 @@
 
 # Changelog
 
+<strong>Version 1.5</strong><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;-added keyboard dpad functionality, now you can move the board with the dpad instead of only beeing able to do it with the buttons;<br>
+
 <strong>Version 1.4</strong><br>
     &nbsp;&nbsp;&nbsp;&nbsp;-added reset button, to start a new game anytime you want,<br>
     &nbsp;&nbsp;&nbsp;&nbsp;-now 5 seconds after you lose appears your score, so you now with which score you lost;<br>

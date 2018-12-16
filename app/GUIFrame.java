@@ -15,6 +15,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -32,6 +34,7 @@ public class GUIFrame {
     private Command _command;
     private JLabel _score;
     private JButton _w, _s, _a, _d;
+    private JPanel _panel;
 
     public GUIFrame(GameManager receiver ,Command cmd) throws IOException{
         _receiver = receiver;
@@ -82,6 +85,7 @@ public class GUIFrame {
         class ButtonUp implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
+                _panel.requestFocusInWindow();
                 if (!(_score.getText().equals("YOU LOST")))
                     _receiver.moveUp();
                 _command.execute();
@@ -96,6 +100,7 @@ public class GUIFrame {
         class ButtonDown implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
+                _panel.requestFocusInWindow();
                 if (!(_score.getText().equals("YOU LOST")))
                     _receiver.moveDown();
                 _command.execute();
@@ -110,6 +115,7 @@ public class GUIFrame {
         class ButtonLeft implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
+                _panel.requestFocusInWindow();
                 if (!(_score.getText().equals("YOU LOST")))
                     _receiver.moveLeft();
                 _command.execute();
@@ -124,6 +130,7 @@ public class GUIFrame {
         class ButtonRight implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
+                _panel.requestFocusInWindow();
                 if (!(_score.getText().equals("YOU LOST")))
                     _receiver.moveRight();
                 _command.execute();
@@ -131,8 +138,41 @@ public class GUIFrame {
         }
         _d.addActionListener(new ButtonRight());
 
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
+        class DPad implements KeyListener {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                System.out.println("teste1");
+            }
+            public void keyReleased(KeyEvent e) {
+                System.out.println("teste2");
+            }
+            public void keyPressed(KeyEvent e) {
+                System.out.println("teste3");
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    if (!(_score.getText().equals("YOU LOST")))
+                        _receiver.moveRight();
+                    _command.execute();
+                }
+                else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                    if (!(_score.getText().equals("YOU LOST")))
+                        _receiver.moveLeft();
+                    _command.execute();
+                }
+                else if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    if (!(_score.getText().equals("YOU LOST")))
+                        _receiver.moveUp();
+                    _command.execute();
+                }
+                else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    if (!(_score.getText().equals("YOU LOST")))
+                        _receiver.moveDown();
+                    _command.execute();
+                }
+            }
+        }
+
+        _panel = new JPanel();
+        _panel.setLayout(null);
         
         int size = _receiver.getMatrixSize();
         int pos = 100;
@@ -144,22 +184,26 @@ public class GUIFrame {
                 JButton button = _matrixDisplay.get(c + l*size);
                 button.setBounds(x, y, 80, 80);
                 button.setBackground(Color.WHITE);
-                panel.add(button);
+                _panel.add(button);
                 x += 90;
             }
             y += 90;
             x = 75;
         }
         
-        panel.add(_w);
-        panel.add(_s);
-        panel.add(_a);
-        panel.add(_d);
-        panel.add(reset);
-        panel.add(background);
+        _panel.add(_w);
+        _panel.add(_s);
+        _panel.add(_a);
+        _panel.add(_d);
+        _panel.add(reset);
+        _panel.add(background);
+        _panel.addKeyListener(new DPad());
         background.add(_score);
-        frame.add(panel);
+        frame.add(_panel);
         frame.setVisible(true);
+        _panel.setFocusable(true);
+        _panel.setRequestFocusEnabled(true);
+        _panel.requestFocusInWindow();
     }
 
     public void print() {
