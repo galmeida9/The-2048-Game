@@ -39,11 +39,20 @@ public class GUIFrame {
     public GUIFrame(GameManager receiver ,Command cmd) throws IOException{
         _receiver = receiver;
         _command = cmd;
+        
+        /* -------------------------------------------------------------------------------------------------------------------
+        Creating the JFrame
+        --------------------------------------------------------------------------------------------------------------------*/
+
         JFrame frame = new JFrame();
         frame.setTitle("The 2048 Game");
         frame.setSize(500, 800);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         
+        /* -------------------------------------------------------------------------------------------------------------------
+        Creating the Exit popup message when closing thw window
+        --------------------------------------------------------------------------------------------------------------------*/
+
         class ExitMessage extends WindowAdapter {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -55,14 +64,25 @@ public class GUIFrame {
 
         frame.addWindowListener(new ExitMessage());
   
-        /*BufferedImage backgroundIMG = ImageIO.read(new File("app\\resources\\beige_background.jpg"));*/
+        /* -------------------------------------------------------------------------------------------------------------------
+        Adding the background image
+        --------------------------------------------------------------------------------------------------------------------*/
+
         BufferedImage backgroundIMG = ImageIO.read(getClass().getResource("beige_background.jpg"));
         JLabel background = new JLabel(new ImageIcon(backgroundIMG));
         background.setBounds(0, 0, 500, 800);
 
+        /* -------------------------------------------------------------------------------------------------------------------
+        Adding the score label
+        --------------------------------------------------------------------------------------------------------------------*/
+
         _score = new JLabel("Score: 0");
         _score.setBounds(20, 0, 500, 100);
         _score.setFont(_score.getFont().deriveFont(30f)); 
+
+        /* -------------------------------------------------------------------------------------------------------------------
+        Creating the reset button
+        --------------------------------------------------------------------------------------------------------------------*/
 
         JButton reset = new JButton("Reset");
         reset.setBounds(350, 35, 100, 30);
@@ -70,13 +90,26 @@ public class GUIFrame {
         class Reset implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GameManager newGM = new GameManager(4);
-                _receiver = newGM;
-                _command.setReceiver(newGM);
-                _command.execute();
+                restart();
             }
         }
+
+        class RestartKey implements KeyListener {
+            @Override
+            public void keyTyped(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {}
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_R) {
+                    restart();
+                }
+            }
+        }
+
         reset.addActionListener(new Reset());
+
+        /* -------------------------------------------------------------------------------------------------------------------
+        Creating the Up key
+        --------------------------------------------------------------------------------------------------------------------*/
 
         JButton _w = new JButton("Up");
         _w.setBounds(200, 500, 90, 90);
@@ -93,6 +126,10 @@ public class GUIFrame {
         }
         _w.addActionListener(new ButtonUp());
 
+        /* -------------------------------------------------------------------------------------------------------------------
+        Creating the Down key
+        --------------------------------------------------------------------------------------------------------------------*/
+
         JButton _s = new JButton("Down");
         _s.setBounds(200, 600, 90, 90);
         _s.setBackground(Color.ORANGE);
@@ -107,6 +144,10 @@ public class GUIFrame {
             }
         }
         _s.addActionListener(new ButtonDown());
+
+        /* -------------------------------------------------------------------------------------------------------------------
+        Creating the Left Key
+        --------------------------------------------------------------------------------------------------------------------*/
 
         JButton _a = new JButton("Left");
         _a.setBounds(100, 600, 90, 90);
@@ -123,6 +164,10 @@ public class GUIFrame {
         }
         _a.addActionListener(new ButtonLeft());
 
+        /* -------------------------------------------------------------------------------------------------------------------
+        Creating the Right key
+        --------------------------------------------------------------------------------------------------------------------*/
+
         JButton _d = new JButton("Right");
         _d.setBounds(300, 600, 90, 90);
         _d.setBackground(Color.ORANGE);
@@ -138,32 +183,31 @@ public class GUIFrame {
         }
         _d.addActionListener(new ButtonRight());
 
+        /* -------------------------------------------------------------------------------------------------------------------
+        Creating the KeyListener for the up, down, left and right keys
+        --------------------------------------------------------------------------------------------------------------------*/
+
         class DPad implements KeyListener {
             @Override
-            public void keyTyped(KeyEvent e) {
-                System.out.println("teste1");
-            }
-            public void keyReleased(KeyEvent e) {
-                System.out.println("teste2");
-            }
+            public void keyTyped(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {}
             public void keyPressed(KeyEvent e) {
-                System.out.println("teste3");
-                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
                     if (!(_score.getText().equals("YOU LOST")))
                         _receiver.moveRight();
                     _command.execute();
                 }
-                else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
                     if (!(_score.getText().equals("YOU LOST")))
                         _receiver.moveLeft();
                     _command.execute();
                 }
-                else if (e.getKeyCode() == KeyEvent.VK_UP) {
+                else if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
                     if (!(_score.getText().equals("YOU LOST")))
                         _receiver.moveUp();
                     _command.execute();
                 }
-                else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
                     if (!(_score.getText().equals("YOU LOST")))
                         _receiver.moveDown();
                     _command.execute();
@@ -171,12 +215,14 @@ public class GUIFrame {
             }
         }
 
+        /* -------------------------------------------------------------------------------------------------------------------
+        Creating the JPanel and adding the matrix to be displayed
+        --------------------------------------------------------------------------------------------------------------------*/
+
         _panel = new JPanel();
         _panel.setLayout(null);
         
         int size = _receiver.getMatrixSize();
-        int pos = 100;
-
         int x = 75, y = 100;
         for (int l = 0; l < size; l++) {
             for (int c = 0; c < size; c++) {
@@ -191,6 +237,10 @@ public class GUIFrame {
             x = 75;
         }
         
+        /* -------------------------------------------------------------------------------------------------------------------
+        Adding everything to the JPanel and the Jframe
+        --------------------------------------------------------------------------------------------------------------------*/
+
         _panel.add(_w);
         _panel.add(_s);
         _panel.add(_a);
@@ -198,6 +248,7 @@ public class GUIFrame {
         _panel.add(reset);
         _panel.add(background);
         _panel.addKeyListener(new DPad());
+        _panel.addKeyListener(new RestartKey());
         background.add(_score);
         frame.add(_panel);
         frame.setVisible(true);
@@ -230,5 +281,16 @@ public class GUIFrame {
                 _score.setText("Score: " + _receiver.getScore());
             }
         }, 5 * 1000);
+    }
+
+    public void restart() {
+        _panel.requestFocusInWindow();
+        int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to restart?", "Restart", JOptionPane.YES_NO_OPTION);
+        if (option == 0) {
+            GameManager newGM = new GameManager(4);
+            _receiver = newGM;
+            _command.setReceiver(newGM);
+            _command.execute();
+        }
     }
 }

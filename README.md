@@ -4,6 +4,11 @@
 
 # Changelog
 
+<strong>Version 1.6</strong><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;-added WASD functionality,<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;-added R shortcut to reset the board, <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;-Popup window now shows to confirm if you really want to restart the game; <br>
+    
 <strong>Version 1.5</strong><br>
     &nbsp;&nbsp;&nbsp;&nbsp;-added keyboard dpad functionality, now you can move the board with the dpad instead of only beeing able to do it with the buttons;<br>
 
